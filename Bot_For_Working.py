@@ -4,6 +4,7 @@
 Что бы не считать на калькуляторе.
 """
 import telebot;
+import time;
 
 bot = telebot.TeleBot('5416611054:AAFkdAkCTK5Kt8cWYJOb87w-QfDqzWxHKcE');
 
