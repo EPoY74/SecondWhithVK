@@ -44,52 +44,63 @@ def get_text_messages(message):
 
 Deposit_Amount = 0.0;
 Deposit_Percent = 0.0;
-
+Deposit_Profit_Pet_Day = 0.0;
 
 @bot.message_handler(content_types=['text'])
 def start(message):
     if message.text == '/start' or message.text == '/help':
         bot.send_message(message.from_user.id, "Рассчитываю процент от суммы. Для расчета требуется ввести сумму и процент (в годовых)."
                                                " Рассчет ориентировочный");
-        bot.register_next_step_handler(message, get_Deposit_Amount); #следующий шаг – функция get_name
     else:
-        bot.send_message(message.from_user.id, 'Напиши /reg');
+        bot.send_message(message.from_user.id, "Рассчитаю тебе процент от суммы.");
+        bot.send_message(message.from_user.id, 'Введите сумму: ');
+        bot.register_next_step_handler(message, get_Deposit_Amount); #следующий шаг – функция get_name;
 
-def get_Deposit_Amount(message): #получаем фамилию
-    bot.send_message(message.from_user.id, 'Введите сумму: ');
+def get_Deposit_Amount(message): # Получаем сумму для расчета
     Deposit_Amount_temp = message.text;
+    print(Deposit_Amount_temp)
     if Deposit_Amount_temp.isdigit():
         Deposit_Amount = float(Deposit_Amount_temp)
         bot.send_message(message.from_user.id, 'Введите годовую процентную ставку');
-        bot.register_next_step_handler(message, get_Deposit_Percent);
+       
     elif Deposit_Amount_temp != '/start' or Deposit_Amount_temp != '/help':
         bot.send_message(message.from_user.id,
                          "Рассчитываю процент от суммы. Для расчета требуется ввести сумму и процент (в годовых)."
-                         " \nРассчет ориентировочный.\nВведите сумму: ");
+                         " \nРассчет ориентировочный.\nВведите любой символ  для продолжения:  ");
+    
+        bot.register_next_step_handler(message, start);
+    else:
+        bot.register_next_step_handler(message, start);
 
-    bot.register_next_step_handler(message, get_surname);
+    bot.register_next_step_handler(message, get_Deposit_Percent);
 
-def get_Deposit_Percent(message):
-    global surname;
-    surname = message.text;
-    bot.send_message(message.from_user.id,'Сколько тебе лет?');
-    bot.register_next_step_handler(message, get_age);
 
-def get_age(message):
-    global age;
-    while age == 0: #проверяем что возраст изменился
-        try:
-             age = int(message.text) #проверяем, что возраст введен корректно
-        except Exception:
-             bot.send_message(message.from_user.id, 'Цифрами, пожалуйста');
-    bot.send_message(message.from_user.id, 'Тебе ' + str(age) + ' лет, тебя зовут ' + name + ' ' + surname + '?')
+
+def get_Deposit_Percent(message): # Получаем процентную ставку для расчета
+    # bot.register_next_step_handler(message, get_Deposit_Percent);
+    Deposit_Percent_temp = message.text;
+    print(Deposit_Percent_temp)
+    if Deposit_Percent_temp.isdigit():
+        Deposit_Percent = float(Deposit_Percent_temp)
+        print(Deposit_Percent)
+    bot.send_message(message.from_user.id, "---111---");
+    bot.register_next_step_handler(message, Calculate_Result);
+
+def Calculate_Result(message): # Расчитываем доход от суммы в день при заданной ставке
+    Deposit_Profit_Per_Day = Deposit_Amount * ((Deposit_Percent / 100) / 365)
+    print(Deposit_Profit_Per_Day)
+    bot.send_message(message.from_user.id, "От суммы" + str(Deposit_Amount) + " руб. При заданной прооцентной ставке " + str(Deposit_Percent) +
+                      " доход составляет " + str(round(Deposit_Profit_Per_Day,2)) + "руб./ день")
+    #bot.send_message(message.from_user.id, 'Тебе ' + str(age) + ' лет, тебя зовут ' + name + ' ' + surname + '?')
 
 
 if __name__ == '__main__':
     while True:
         try:
+            print ("--- start ---")
             bot.polling(none_stop=True)
         except Exception as e:
+            print("--- reset ---")
             time.sleep(3)
             print(e)
 
