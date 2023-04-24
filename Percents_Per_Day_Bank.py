@@ -18,6 +18,8 @@ Deposit_Profit_Per_Day = 0.0;
 
 @bot.message_handler(content_types=['text'])
 def start(message):
+    User_Name = bot.get_me()
+    print(User_Name, end = ' ')
     if message.text == '/start' or message.text == '/help':
         bot.send_message(message.from_user.id, "Рассчитываю процент от суммы. Для расчета требуется ввести сумму и процент (в годовых)."
                                                " Рассчет ориентировочный \nВведите сумму:");
@@ -30,7 +32,7 @@ def start(message):
 def get_Deposit_Amount(message): # Получаем сумму для расчета
     global Deposit_Amount
     Deposit_Amount_temp = message.text;   
-    print(Deposit_Amount_temp)
+    print(Deposit_Amount_temp, end = ' ')
     if Deposit_Amount_temp.isdigit():
         Deposit_Amount = float(Deposit_Amount_temp)
         bot.send_message(message.from_user.id, 'Введите годовую процентную ставку');
@@ -52,7 +54,7 @@ def get_Deposit_Percent(message): # Получаем процентную ста
     global Deposit_Profit_Per_Day
     # bot.register_next_step_handler(message, get_Deposit_Percent);
     Deposit_Percent_temp = message.text;
-    print(Deposit_Percent_temp)
+    print(Deposit_Percent_temp, end = ' ')
     if Deposit_Percent_temp.isdigit() and Deposit_Amount:
         Deposit_Percent = float(Deposit_Percent_temp)
         print(Deposit_Percent)
