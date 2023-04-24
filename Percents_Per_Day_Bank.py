@@ -25,11 +25,11 @@ def start(message):
     else:
         bot.send_message(message.from_user.id, "Рассчитаю тебе процент от суммы. \nВведите сумму:");
         # bot.send_message(message.from_user.id, 'Введите сумму: ');
-    bot.register_next_step_handler(message, get_Deposit_Amount); #следующий шаг – получаем сумму
+    bot.register_next_step_handler(message, get_Deposit_Amount); #следующий шаг – получаем сумму    
 
 def get_Deposit_Amount(message): # Получаем сумму для расчета
     global Deposit_Amount
-    Deposit_Amount_temp = message.text;
+    Deposit_Amount_temp = message.text;   
     print(Deposit_Amount_temp)
     if Deposit_Amount_temp.isdigit():
         Deposit_Amount = float(Deposit_Amount_temp)
@@ -64,7 +64,8 @@ def get_Deposit_Percent(message): # Получаем процентную ста
         print(Deposit_Profit_Per_Day)
         bot.send_message(message.from_user.id, "За 1 день: " + str(round(Deposit_Profit_Per_Day,2)) + " руб. в  день\n" + "За 7 дней:  "
                           + str(round(Deposit_Profit_Per_7Day,2)) + " руб. за 7 дней\n" + 
-                          "За 30 дней: " + str(round(Deposit_Profit_Per_30Day,2)) + " руб. за 30 дней\n");
+                          "За 30 дней: " + str(round(Deposit_Profit_Per_30Day,2)) + " руб. за 30 дней\n"
+                          "Для продолжения напиши /start или введи любой символ и нажми \"Enter\"");
     # bot.send_message(message.from_user.id, 'Введите сумму: ');
     bot.register_next_step_handler(message, start);
 
@@ -75,7 +76,7 @@ if __name__ == '__main__':
             bot.polling(none_stop=True)
         except Exception as e:
             print("--- reset ---")
-            time.sleep(3)
+            time.sleep(10)
             print(e)
 
 
