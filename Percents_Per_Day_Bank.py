@@ -31,21 +31,21 @@ def start(message):
 
 def get_Deposit_Amount(message): # Получаем сумму для расчета
     global Deposit_Amount
-    Deposit_Amount_temp = message.text;   
+    Deposit_Amount_temp = message.text;
     print(Deposit_Amount_temp, end = ' ')
     if Deposit_Amount_temp.isdigit():
         Deposit_Amount = float(Deposit_Amount_temp)
-        bot.send_message(message.from_user.id, 'Введите годовую процентную ставку');
+        bot.send_message(message.from_user.id, 'Введите годовую процентную ставку')
        
     elif Deposit_Amount_temp != '/start' or Deposit_Amount_temp != '/help':
         bot.send_message(message.from_user.id,
-                         "Введите данные числом. \nРассчет ориентировочный.\n");
-        bot.register_next_step_handler(message, start);
+                         "Введите данные числом. \nРассчет ориентировочный.\n")
+        bot.register_next_step_handler(message, start)
     else:
         bot.send_message(message.from_user.id,
-                         "Введите данные числом. \nРассчет ориентировочный.\n");
-        bot.register_next_step_handler(message, start);
-    bot.register_next_step_handler(message, get_Deposit_Percent);
+                         "Введите данные числом. \nРассчет ориентировочный.\n")
+        bot.register_next_step_handler(message, start)
+    bot.register_next_step_handler(message, get_Deposit_Percent)
 
 
 
@@ -53,13 +53,13 @@ def get_Deposit_Percent(message): # Получаем процентную ста
     global Deposit_Percent
     global Deposit_Profit_Per_Day
     # bot.register_next_step_handler(message, get_Deposit_Percent);
-    Deposit_Percent_temp = message.text;
+    Deposit_Percent_temp = message.text
     print(Deposit_Percent_temp, end = ' ')
     if Deposit_Percent_temp.isdigit() and Deposit_Amount:
         Deposit_Percent = float(Deposit_Percent_temp)
         print(Deposit_Percent)
         bot.send_message(message.from_user.id, "От суммы " + str(Deposit_Amount) + " руб.,  при заданной процентной ставке " + str(Deposit_Percent) +
-                          " доход(штраф) составляет: \n ");
+                          " доход(штраф) составляет: \n ")
         Deposit_Profit_Per_Day = Deposit_Amount * ((Deposit_Percent / 100) / 365)
         Deposit_Profit_Per_7Day = Deposit_Amount * ((Deposit_Percent / 100) / 365) * 7
         Deposit_Profit_Per_30Day = Deposit_Amount * ((Deposit_Percent / 100) / 365) * 30
@@ -67,9 +67,9 @@ def get_Deposit_Percent(message): # Получаем процентную ста
         bot.send_message(message.from_user.id, "За 1 день: " + str(round(Deposit_Profit_Per_Day,2)) + " руб. в  день\n" + "За 7 дней:  "
                           + str(round(Deposit_Profit_Per_7Day,2)) + " руб. за 7 дней\n" + 
                           "За 30 дней: " + str(round(Deposit_Profit_Per_30Day,2)) + " руб. за 30 дней\n"
-                          "Для продолжения напиши /start или введи любой символ и нажми \"Enter\"");
-    # bot.send_message(message.from_user.id, 'Введите сумму: ');
-    bot.register_next_step_handler(message, start);
+                          "Для продолжения напиши /start или введи любой символ и нажми \"Enter\"")
+    # bot.send_message(message.from_user.id, 'Введите сумму: ')
+    bot.register_next_step_handler(message, start)
 
 if __name__ == '__main__':
     while True:
