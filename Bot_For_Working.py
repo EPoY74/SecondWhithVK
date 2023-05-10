@@ -13,11 +13,12 @@ bot = telebot.TeleBot('5416611054:AAFkdAkCTK5Kt8cWYJOb87w-QfDqzWxHKcE');
 def get_text_messages(message):
     User_Name = message.from_user.username
     # User_Name = bot.get_me()
-    print(User_Name.id, end = ' ')
+    print(User_Name, end = ' ')
     if message.text == "/start" or message.text ==  "/help":
         bot.send_message(message.from_user.id, "Считаю сумму штрафа в день при 20% годовых. Требуется ввести сумму задолжности.")
 
     pers1 = message.text
+    print(pers1, end = ' ')
     if pers1.isdigit():
         pers2 = float(pers1)
         shtraf = round(pers2 * (0.2 / 365),2)

@@ -18,7 +18,7 @@ Deposit_Profit_Per_Day = 0.0;
 
 @bot.message_handler(content_types=['text'])
 def start(message):
-    User_Name = bot.get_me()
+    User_Name = message.from_user.username
     print(User_Name, end = ' ')
     if message.text == '/start' or message.text == '/help':
         bot.send_message(message.from_user.id, "Рассчитываю процент от суммы. Для расчета требуется ввести сумму и процент (в годовых)."
@@ -57,13 +57,13 @@ def get_Deposit_Percent(message): # Получаем процентную ста
     print(Deposit_Percent_temp, end = ' ')
     if Deposit_Percent_temp.isdigit() and Deposit_Amount:
         Deposit_Percent = float(Deposit_Percent_temp)
-        print(Deposit_Percent)
+        print(Deposit_Percent, end = ' ')
         bot.send_message(message.from_user.id, "От суммы " + str(Deposit_Amount) + " руб.,  при заданной процентной ставке " + str(Deposit_Percent) +
                           " доход(штраф) составляет: \n ")
         Deposit_Profit_Per_Day = Deposit_Amount * ((Deposit_Percent / 100) / 365)
         Deposit_Profit_Per_7Day = Deposit_Amount * ((Deposit_Percent / 100) / 365) * 7
         Deposit_Profit_Per_30Day = Deposit_Amount * ((Deposit_Percent / 100) / 365) * 30
-        print(Deposit_Profit_Per_Day)
+        print(round(Deposit_Profit_Per_Day,2))
         bot.send_message(message.from_user.id, "За 1 день: " + str(round(Deposit_Profit_Per_Day,2)) + " руб. в  день\n" + "За 7 дней:  "
                           + str(round(Deposit_Profit_Per_7Day,2)) + " руб. за 7 дней\n" + 
                           "За 30 дней: " + str(round(Deposit_Profit_Per_30Day,2)) + " руб. за 30 дней\n"
