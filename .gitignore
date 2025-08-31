@@ -3,3 +3,6 @@
 /.idea
 /Persents_Per_Day_Bank/
 /.venv
+# */__pycache__
+__pycache__
+
