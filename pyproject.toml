@@ -8,13 +8,14 @@ version = "0.1.0"
 description = "Телеграм-бот: считает ежедневный процент от суммы."
 readme = "README.md"
 requires-python = ">= 3.9"
-authors = [{ name = "Eugenii Petrov ", , email = "epoy74@gmail.com" }]
+authors = [{ name = "Eugenii Petrov ", email = "epoy74@gmail.com" }]
 
 dependencies = [
-    "pyTelegramBotAPI == 4.*"
+    "pyTelegramBotAPI ~= 4.0"
 ]
 
-[project.optional-dependencies] = [
+[project.optional-dependencies] 
+dev = [
     "ruff",
     "pytest"
 ]
