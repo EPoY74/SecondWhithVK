@@ -36,7 +36,7 @@ def get_bot_api_from_dotenv() -> str | None:
         raise EnvFileNotFound()
     elif not load_dotenv():
         logger.warning("Environment variable(s) not found in .env file")
-        raise
+        raise # TODO: Implement a custom exception handler
     else:
         required_vars: list[str] = ["BOT_TOKEN"]
         missing_vars = [var for var in required_vars if var not in os.environ]
