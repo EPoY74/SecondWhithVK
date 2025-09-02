@@ -29,7 +29,13 @@ import lib.secrets as proj_sec
 
 logger = proj_log.logging.getLogger(__name__)
 
-BOT_TOKEN: str = proj_sec.get_bot_api_from_dotenv()
+extract_bot_token: str | None = proj_sec.get_bot_api_from_dotenv()
+
+if extract_bot_token:
+    BOT_TOKEN: str = str(extract_bot_token)
+else:
+    logger.critical("Can't resive telegram bot token" )
+    raise
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
