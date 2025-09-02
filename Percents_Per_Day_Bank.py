@@ -25,10 +25,13 @@ import time
 import telebot
 
 import lib.project_log as proj_log
+import lib.secrets as proj_sec
 
 logger = proj_log.logging.getLogger(__name__)
 
-bot = telebot.TeleBot("6272876979:AAG67KaMwaTPVsL0AN9nXDnwTpk1FLbP2rg")
+BOT_TOKEN: str = proj_sec.get_bot_api_from_dotenv()
+
+bot = telebot.TeleBot(BOT_TOKEN)
 
 bot.delete_webhook()
 
