@@ -13,7 +13,7 @@ from lib.exceptions import EnvFileNotFound, RequiredEnvVariablesNotFound
 logger = proj_log.logging.getLogger("lib/secrets.py")
 
 
-def get_bot_api_from_dotenv() -> str | None:
+def get_bot_api_from_dotenv() -> str:
     """
     Retrieve Telegram bot token from environment variables
      loaded from .env file.
