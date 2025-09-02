@@ -20,12 +20,13 @@ Author: Eugenii Petrov (epoy74@gmail.com)
 """
 
 # import os
-import lib.project_log as log
 import time
 
 import telebot
 
-logger = log.logging.getLogger(__name__)
+import lib.project_log as proj_log
+
+logger = proj_log.logging.getLogger(__name__)
 
 bot = telebot.TeleBot("6272876979:AAG67KaMwaTPVsL0AN9nXDnwTpk1FLbP2rg")
 
