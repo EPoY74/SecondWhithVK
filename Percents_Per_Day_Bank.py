@@ -35,7 +35,7 @@ if extract_bot_token:
     BOT_TOKEN: str = str(extract_bot_token)
 else:
     logger.critical("Can't resive telegram bot token" )
-    raise
+    raise # TODO: Implement a custom exception handler
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -49,7 +49,7 @@ Deposit_Profit_Per_Day = 0.0
 @bot.message_handler(content_types=["text"])
 def start(message):
     User_Name = bot.get_me()
-    print(User_Name, end=" ")
+    logger.debug(User_Name)
     if message.text == "/start" or message.text == "/help":
         bot.send_message(
             message.from_user.id,
@@ -73,7 +73,7 @@ def start(message):
 def get_Deposit_Amount(message):  # Получаем сумму для расчета
     global Deposit_Amount
     Deposit_Amount_temp = message.text
-    print(Deposit_Amount_temp, end=" ")
+    logger.debug(Deposit_Amount_temp)
     if Deposit_Amount_temp.isdigit():
         Deposit_Amount = float(Deposit_Amount_temp)
         bot.send_message(
@@ -100,10 +100,10 @@ def get_Deposit_Percent(message):  # Получаем процентную ст�
     global Deposit_Profit_Per_Day
     # bot.register_next_step_handler(message, get_Deposit_Percent);
     Deposit_Percent_temp = message.text
-    print(Deposit_Percent_temp, end=" ")
+    logger.debug(Deposit_Percent_temp)
     if Deposit_Percent_temp.isdigit() and Deposit_Amount:
         Deposit_Percent = float(Deposit_Percent_temp)
-        print(Deposit_Percent)
+        logger.debug(Deposit_Percent)
         bot.send_message(
             message.from_user.id,
             "От суммы "
@@ -121,7 +121,7 @@ def get_Deposit_Percent(message):  # Получаем процентную ст�
         Deposit_Profit_Per_30Day = (
             Deposit_Amount * ((Deposit_Percent / 100) / 365) * 30
         )
-        print(Deposit_Profit_Per_Day)
+        logger.debug(Deposit_Profit_Per_Day)
         bot.send_message(
             message.from_user.id,
             "За 1 день: "
@@ -144,9 +144,9 @@ def get_Deposit_Percent(message):  # Получаем процентную ст�
 if __name__ == "__main__":
     while True:
         try:
-            print("--- start ---")
+            logger.info("--- start ---")
             bot.polling(none_stop=True)
         except Exception as e:
-            print("--- reset ---")
+            logger.warning("--- reset ---")
             time.sleep(10)
-            print(e)
+            logger.error(e)
