@@ -1,16 +1,31 @@
 """
-http://t.me/Percents_Per_Day_bot
+Telegram Bot: Daily Percentage Calculator
 
-Телеграм бот. Считает проценты на каждый день
-Вводим сумму и проценты, которые требуется посчитать.
+Bot URL: http://t.me/Percents_Per_Day_bot
 
-6272876979:AAG67KaMwaTPVsL0AN9nXDnwTpk1FLbP2rg
+Description:
+This bot calculates the monetary value of an annual interest rate 
+broken down into daily, weekly, and 30-day periods.
 
+User inputs:
+1. The principal amount (base sum of money)
+2. The annual interest rate (in percent)
+
+The bot then computes and displays:
+- Interest per day
+- Interest per week
+- Interest per 30-day month
+
+Author: Eugenii Petrov (epoy74@gmail.com)
 """
 
+# import os
+import lib.project_log as log
 import time
 
 import telebot
+
+logger = log.logging.getLogger(__name__)
 
 bot = telebot.TeleBot("6272876979:AAG67KaMwaTPVsL0AN9nXDnwTpk1FLbP2rg")
 
