@@ -7,6 +7,7 @@ import os
 from dotenv import load_dotenv
 
 import lib.project_log as proj_log
+from lib.exceptions import EnvFileNotFound
 
 logger = proj_log.logging.getLogger("lib/secrets.py")
 
@@ -29,8 +30,8 @@ def get_bot_api_from_dotenv() -> str | None:
     logger.info(dotenv_path)
 
     if not os.path.exists(dotenv_path):
-        logger.warning("File .env not found in current directory")
-        # raise
+        logger.error("File .env not found in current directory")
+        raise EnvFileNotFound()
     elif not load_dotenv():
         logger.warning("Environment variable(s) not found in .env file")
         raise
@@ -42,4 +43,6 @@ def get_bot_api_from_dotenv() -> str | None:
         else:
             logger.error("Variable BOT_TOKEN not found")
             raise
-    return None
+
+if __name__ == "__main__":
+    get_bot_api_from_dotenv()
